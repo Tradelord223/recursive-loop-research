@@ -1,0 +1,10 @@
+# Privacy: raw human decision logs + reasons stay LOCAL by default (see revealed-preference/README.md).
+revealed-preference/prefs_log.jsonl
+**/state/GATE_RESOLVED.jsonl
+**/state/GATE_QUEUE.jsonl
+**/state/*.bak-*
+**/.loop_counter.json
+# Python / tooling
+__pycache__/
+*.pyc
+.DS_Store
