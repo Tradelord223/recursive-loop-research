@@ -1,0 +1,122 @@
+{
+  "P01": {
+    "a": "impl_01",
+    "b": "impl_02",
+    "gap": 0,
+    "oracle_winner": "tie",
+    "score_a": 12,
+    "score_b": 12
+  },
+  "P02": {
+    "a": "impl_08",
+    "b": "impl_09",
+    "gap": 0,
+    "oracle_winner": "tie",
+    "score_a": 6,
+    "score_b": 6
+  },
+  "P03": {
+    "a": "impl_04",
+    "b": "impl_06",
+    "gap": 0,
+    "oracle_winner": "tie",
+    "score_a": 4,
+    "score_b": 4
+  },
+  "P04": {
+    "a": "impl_05",
+    "b": "impl_08",
+    "gap": 2,
+    "oracle_winner": "impl_05",
+    "score_a": 8,
+    "score_b": 6
+  },
+  "P05": {
+    "a": "impl_08",
+    "b": "impl_04",
+    "gap": 2,
+    "oracle_winner": "impl_08",
+    "score_a": 6,
+    "score_b": 4
+  },
+  "P06": {
+    "a": "impl_06",
+    "b": "impl_10",
+    "gap": 2,
+    "oracle_winner": "impl_06",
+    "score_a": 4,
+    "score_b": 2
+  },
+  "P07": {
+    "a": "impl_03",
+    "b": "impl_05",
+    "gap": 4,
+    "oracle_winner": "impl_03",
+    "score_a": 12,
+    "score_b": 8
+  },
+  "P08": {
+    "a": "impl_05",
+    "b": "impl_04",
+    "gap": 4,
+    "oracle_winner": "impl_05",
+    "score_a": 8,
+    "score_b": 4
+  },
+  "P09": {
+    "a": "impl_09",
+    "b": "impl_10",
+    "gap": 4,
+    "oracle_winner": "impl_09",
+    "score_a": 6,
+    "score_b": 2
+  },
+  "P10": {
+    "a": "impl_07",
+    "b": "impl_08",
+    "gap": 6,
+    "oracle_winner": "impl_07",
+    "score_a": 12,
+    "score_b": 6
+  },
+  "P11": {
+    "a": "impl_05",
+    "b": "impl_10",
+    "gap": 6,
+    "oracle_winner": "impl_05",
+    "score_a": 8,
+    "score_b": 2
+  },
+  "P12": {
+    "a": "impl_11",
+    "b": "impl_04",
+    "gap": 8,
+    "oracle_winner": "impl_11",
+    "score_a": 12,
+    "score_b": 4
+  },
+  "P13": {
+    "a": "impl_01",
+    "b": "impl_06",
+    "gap": 8,
+    "oracle_winner": "impl_01",
+    "score_a": 12,
+    "score_b": 4
+  },
+  "P14": {
+    "a": "impl_12",
+    "b": "impl_10",
+    "gap": 10,
+    "oracle_winner": "impl_12",
+    "score_a": 12,
+    "score_b": 2
+  },
+  "P15": {
+    "a": "impl_02",
+    "b": "impl_09",
+    "gap": 6,
+    "oracle_winner": "impl_02",
+    "score_a": 12,
+    "score_b": 6
+  }
+}

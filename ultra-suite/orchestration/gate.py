@@ -83,12 +83,22 @@ def prefs_call(prefs: Path | None, args: list[str]) -> tuple[bool, str]:
 
 # ---------------- commands ----------------
 def cmd_enqueue(a):
+    # P2.3 input validation: reject bad input instead of silently coercing it, so the gate
+    # queue (the B5 training-data source) cannot be quietly polluted.
+    if not (a.proposal and a.proposal.strip()):
+        sys.exit("[gate] --proposal must be non-empty")
+    if a.cls not in VALID_CLASSES:
+        sys.exit(f"[gate] unknown --class {a.cls!r}; must be one of {VALID_CLASSES}")
+    existing = load_jsonl(queue_path(a.project))
+    rid = a.id or f"g{len(existing) + 1}"
+    if any(r.get("id") == rid for r in existing):
+        sys.exit(f"[gate] duplicate id {rid!r} already in the queue")
     rec = {
-        "id": a.id or f"g{len(load_jsonl(queue_path(a.project))) + 1}",
+        "id": rid,
         "ts": now(),
         "proposal": a.proposal,
         "context": a.context or "",
-        "class": a.cls if a.cls in VALID_CLASSES else "other",
+        "class": a.cls,
         "status": "pending",
     }
     append_jsonl(queue_path(a.project), rec)

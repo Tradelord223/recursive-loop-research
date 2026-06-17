@@ -1,0 +1,21 @@
+# requirements.txt — recursive-loop-research
+#
+# THIS REPO HAS NO THIRD-PARTY PYTHON DEPENDENCIES.
+# Every .py file imports only the Python standard library (argparse, json, os,
+# re, subprocess, sys, pathlib, unittest, importlib, tempfile, shutil, datetime,
+# collections). There is nothing to `pip install`.
+#
+# This file is intentionally empty of packages. It exists so that the absence of
+# dependencies is an explicit, checked claim rather than an assumption. If you run
+#     pip install -r requirements.txt
+# it will install nothing and succeed.
+#
+# The external requirements that DO exist are command-line tools, not pip
+# packages, and are documented in ENVIRONMENT.md (the shell drivers need the
+# `claude` CLI and `jq`; running an actual loop incurs real API spend).
+#
+# Tests run under the stdlib `unittest` module:
+#     python3 -m unittest discover -s tests
+# pytest also works but is optional and is NOT a dependency of the suite.
+#
+# (No package lines below this point — by design.)

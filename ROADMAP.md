@@ -90,6 +90,23 @@ not less. The router must run inside those bounds, never outside them.
 - **B6** — drift monitor: semantic distance of chosen actions from the Original Intent over
   generations; halt/escalate past a threshold.
 
+## Side study (Exp6) — disagreement-gating, scanned + stress-tested
+
+- **Lit scan** (`research/LITERATURE.md`): the "disagreement → abstain/escalate" idea is **prior
+  art** (QBC 1992 → ensembles → self-consistency → ReDAct/Oversight 2026). Not claimed as novel.
+- **Exp6 + Exp7** (`experiments/exp6-disjointness/`, `experiments/exp7-diverse/`): tested whether a
+  **same-model committee** is blindly unanimous and whether **diversity** fixes it. **Both demoted by
+  a controlled baseline.** Exp6 observed a committee (cavecrew-builder = opus + caveman persona) go
+  6/6 unanimous-WRONG on P13 (strictly-dominated impl rated tied with a perfect one) — but a 6×opus
+  control through the clean Exp7 harness showed clean opus is **~50/50 on P13, not unanimous**. So
+  Exp6's unanimity was a **persona/sampling artifact**, not robust same-model blindness, and Exp7's
+  "diversity breaks it" contrast is **NOT supported** (single-tier already disagrees as much). Two
+  more retractions: P03 (circular, "equal on my toy tests" ≠ merit) and the Exp6→Exp7 "controlled
+  manipulation" framing (3 things varied, not 1). **What survives:** an *existence* proof that
+  consensus CAN be confidently wrong, and the unchanged design rule (justified anyway): **never
+  auto-act on the loop's own consensus; route past a non-model signal.** The methodology — controls
+  catching my own clean-looking overclaims — is the real result of this leg.
+
 Status: B1 ✓ (pairwise > absolute). B2.5 ✓ narrow (structure-grounding + deception-resistance;
 value-calibration still OPEN). B4 mechanism prototyped.
 

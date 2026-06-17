@@ -1,0 +1,21 @@
+Analyzed each by failure mode over valid romans 1–3999 (most are ≥1000, so crash-on-L/D/M kills coverage hard).
+
+Quick taxonomy: correct=forward-`<`, reverse-prev, while-pair-skip, pair-replace, expand, clever-2×prev. Broken: ADD-all (~51%, fails subtractive), pair-diff-no-skip (~51%, same fail set as ADD-all), forward-`<=` (~11%, fails repeated symbols), limited-table I/V/X/C (~5%, crashes L/D/M), wrong-values V=4/X=9 (~4%), `len(s)` (~0%).
+
+```
+P01: winner=tie
+P02: winner=B
+P03: winner=tie
+P04: winner=B
+P05: winner=A
+P06: winner=B
+P07: winner=B
+P08: winner=A
+P09: winner=B
+P10: winner=B
+P11: winner=B
+P12: winner=B
+P13: winner=B
+P14: winner=B
+P15: winner=B
+```

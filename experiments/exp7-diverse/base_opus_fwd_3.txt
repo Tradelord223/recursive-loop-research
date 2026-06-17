@@ -1,0 +1,21 @@
+Analyzed each pair by reasoning code vs spec. Key implementation types: correct-reverse (CR), forward-next (FN), forward-double-count-bug (FNS), sum-all (SA), 4-symbol-crash (C4), wrong-values (WV), len(s), while-pair (WP), pairs-replace (PR), expand-additive (EA), prev-trick (PT), forward-`<=`-broken (FN≤).
+
+Counted passing cases over 1–3999 where ambiguous (both broken).
+
+```
+P01: winner=tie
+P02: winner=B
+P03: winner=tie
+P04: winner=A
+P05: winner=B
+P06: winner=A
+P07: winner=A
+P08: winner=B
+P09: winner=A
+P10: winner=A
+P11: winner=A
+P12: winner=A
+P13: winner=A
+P14: winner=A
+P15: winner=A
+```

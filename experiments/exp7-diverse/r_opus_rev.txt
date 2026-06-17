@@ -1,0 +1,17 @@
+Analyzed each pair by reasoning code vs spec, estimating which passes more of 1–3999.
+
+P01: winner=tie
+P02: winner=B
+P03: winner=A
+P04: winner=B
+P05: winner=A
+P06: winner=B
+P07: winner=B
+P08: winner=A
+P09: winner=B
+P10: winner=B
+P11: winner=B
+P12: winner=B
+P13: winner=tie
+P14: winner=B
+P15: winner=B

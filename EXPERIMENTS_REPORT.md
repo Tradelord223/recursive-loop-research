@@ -152,3 +152,26 @@ this whole exercise is meant to remove.
 | Exp1: measures self-consistency only | Rubric labeled "consistent for one model, not calibrated"; periodic human spot-checks of spawned items. |
 | Exp2: null, manipulation+floor failure | Separate-reviewer kept as cited defense-in-depth, honestly marked unvalidated; auto-apply restricted to additive/reversible changes only. |
 | (orthogonal) suite not executable | `loop_driver.sh` — a real bounded external loop — replaces the no-op Python stub. |
+
+---
+
+# Experiments 3–7 (summary — full detail in each `experiments/*/results.md` and `research/PAPER.md`)
+
+This report originally covered Exp1–2. Exp3–7 are folded in here (P4.5); each experiment's
+`results.md` owns the full account including retractions. **Read the honesty arc, not a win:**
+four clean-looking results were demoted by a control or a circularity check this session.
+
+| Exp | Question | Honest verdict |
+|-----|----------|----------------|
+| **Exp3** (`exp3-pairwise`) | Pairwise vs absolute opportunity scoring | **Holds.** Pairwise is far lower-noise (12/15 unanimous, no position bias); the item that coin-flipped 2/6 under absolute scoring ranked #2 unanimously under pairwise. Stabilizes *ordering*, not the cut line. |
+| **Exp4** (`exp4-closedloop`) | Does anchored judgment predict realized value? | **ρ=0.986 RETRACTED.** Confounded — realized value was my own test-allocation + descriptions telegraphed the answer. Survives only: separates genuine bugs from cosmetic no-ops. |
+| **Exp5** (`exp5-deceptive`) | Value-prediction vs an independent structural oracle, with deception | **ρ=1.0 NARROWED.** Proves call-graph tracing + deception-resistance (scary-named dead code → bottom), NOT value judgment — value was *defined* ≡ reach (circular). Unanimity was "the tell." |
+| **Exp6** (`exp6-disjointness`) | Does same-model committee consensus certify correctness? | **DEMOTED.** One committee (cavecrew = opus+persona) went 6/6 unanimous-wrong on a strictly-dominated impl — but a 6×opus control showed clean opus is 3/3 (coin-flip), so the unanimity was a persona/sampling artifact. Existence proof only. |
+| **Exp7** (`exp7-diverse`) | Does tier-diversity break the (claimed) blindness? | **NOT SUPPORTED.** The "diversity fixes it" contrast collapsed under the 6×opus baseline (single-tier already splits as much). 3 retractions logged. |
+
+**Prior-art note** (`research/LITERATURE.md`): the disagreement-gate idea is established (QBC 1992 →
+deep ensembles → self-consistency → ReDAct/Oversight 2026); not claimed novel here.
+
+**The standing result** is not any of these — it is the methodology (controls demote overclaims;
+every self-authored oracle rebuilds circularity) and the one non-circular path: **revealed
+preference**, the maintainer's real decisions, instrumented and pending ≥20 (currently 5).

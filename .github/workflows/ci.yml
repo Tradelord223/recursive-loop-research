@@ -1,0 +1,30 @@
+name: ci
+
+# Deterministic checks only: the stdlib test suite (stub predictor, no spend), py_compile on
+# the orchestration sources, and `bash -n` syntax checks on the driver scripts. None of these
+# require the `claude` CLI — the drivers are syntax-checked, never executed — so CI is free and
+# offline. Actually running loop_driver.sh / action_router.sh needs the claude CLI (+ jq) and
+# is intentionally out of scope here; see run_checks.sh and those scripts' honesty labels.
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # Delegates to run_checks.sh so the local runner and CI verify exactly the same
+      # things (no drift). The suite is stdlib-only, so no dependency install is needed.
+      - name: Run checks
+        run: bash run_checks.sh

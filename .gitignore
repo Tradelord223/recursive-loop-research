@@ -8,3 +8,6 @@ revealed-preference/prefs_log.jsonl
 __pycache__/
 *.pyc
 .DS_Store
+
+# incomplete rater output (junk)
+**/*.pending
