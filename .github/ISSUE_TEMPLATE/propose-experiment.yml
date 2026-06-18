@@ -1,0 +1,23 @@
+name: "🧪 Propose an experiment or control"
+description: Suggest a new experiment, a control that would strengthen/demote a result, or a way to escape a known floor.
+title: "[experiment] "
+labels: ["experiment-idea"]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: The question it answers
+      description: What open question or untested claim does this address? (See ROADMAP.md / CLAIMS_NOT_ESTABLISHED.md.)
+    validations: { required: true }
+  - type: textarea
+    id: design
+    attributes:
+      label: Design
+      description: What's the unfakeable signal / oracle? What's the control? How does it avoid the self-authored-oracle circularity the project keeps hitting?
+    validations: { required: true }
+  - type: textarea
+    id: outcomes
+    attributes:
+      label: Pre-registered outcomes
+      description: What would each result mean? (Pre-registering keeps it from becoming confirmation theater.)
+    validations: { required: true }

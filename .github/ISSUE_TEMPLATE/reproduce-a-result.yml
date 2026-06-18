@@ -1,0 +1,33 @@
+name: "🔁 Reproduction report"
+description: You tried to reproduce an experiment — report whether it matched.
+title: "[reproduce] "
+labels: ["reproduction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        See [REPRODUCE.md](../blob/main/REPRODUCE.md). Deterministic oracle/analysis steps should
+        match exactly; rater (`claude -p`) steps will differ run-to-run — that's expected and noted.
+  - type: input
+    id: experiment
+    attributes:
+      label: Which experiment / step?
+      placeholder: e.g. experiments/exp4-closedloop/oracle.py
+    validations: { required: true }
+  - type: dropdown
+    id: outcome
+    attributes:
+      label: Outcome
+      options: ["Matched exactly", "Differed (deterministic step — likely a bug)", "Differed (rater step — expected)", "Could not run"]
+    validations: { required: true }
+  - type: textarea
+    id: detail
+    attributes:
+      label: Command + output
+      render: shell
+    validations: { required: true }
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      placeholder: e.g. Python 3.14.x, macOS / Linux, claude CLI version (if used)

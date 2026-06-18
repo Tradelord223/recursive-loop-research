@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Read what the project does NOT establish first
+    url: https://github.com/Tradelord223/recursive-loop-research/blob/main/research/CLAIMS_NOT_ESTABLISHED.md
+    about: Many "this is wrong" reports are already disclosed as open limits. Skim this before filing.
+  - name: How results are produced (reproduce before reporting)
+    url: https://github.com/Tradelord223/recursive-loop-research/blob/main/REPRODUCE.md
+    about: Exact commands to regenerate each experiment's deterministic artifacts.

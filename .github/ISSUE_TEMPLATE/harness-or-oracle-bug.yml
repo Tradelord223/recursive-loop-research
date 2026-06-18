@@ -1,0 +1,36 @@
+name: "🐛 Harness / oracle bug"
+description: A bug in an experiment's oracle, hidden tests, analysis script, or the suite's code.
+title: "[bug] "
+labels: ["bug", "harness"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Oracle/test bugs directly threaten a result's validity — so they matter a lot here.
+        (The maintainer found one in Exp8's own oracle: a `round(2.675, 2)` test that demanded an
+        impossible float value. Finding more of these is genuinely useful.)
+  - type: input
+    id: where
+    attributes:
+      label: File
+      placeholder: e.g. experiments/exp8-selfreview/hidden_tests.py
+    validations: { required: true }
+  - type: textarea
+    id: bug
+    attributes:
+      label: The bug
+      description: What's wrong, why, and what the correct behavior is.
+    validations: { required: true }
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction
+      description: Exact command + observed vs expected output.
+      render: shell
+    validations: { required: true }
+  - type: dropdown
+    id: affects
+    attributes:
+      label: Does it change a reported result?
+      options: ["Yes — a conclusion is affected", "No — cosmetic/non-result", "Unsure"]
+    validations: { required: true }

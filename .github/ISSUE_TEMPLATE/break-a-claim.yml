@@ -1,0 +1,36 @@
+name: "🔨 Break a claim"
+description: Challenge a finding or claim in the repo with evidence. This is the most-welcome issue type.
+title: "[break-a-claim] "
+labels: ["break-a-claim"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This project's credibility comes from disclosed limits and visible retractions, not hype.
+        A well-evidenced refutation is a contribution, not an attack — five clean-looking results
+        in this repo were already demoted by exactly this kind of scrutiny.
+  - type: input
+    id: claim
+    attributes:
+      label: Which claim?
+      description: Quote it and point to the file/line (e.g. research/PAPER.md, an experiment's results.md).
+      placeholder: 'e.g. "Exp3: pairwise stabilizes ordering" in experiments/exp3-pairwise/results.md'
+    validations: { required: true }
+  - type: textarea
+    id: problem
+    attributes:
+      label: What's wrong with it?
+      description: Confound, circularity, overclaim, a bug in an oracle/test, or contradicting evidence.
+    validations: { required: true }
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Commands run, output, a counterexample, a citation. Reproducible beats assertion.
+    validations: { required: true }
+  - type: dropdown
+    id: severity
+    attributes:
+      label: If correct, this claim should be...
+      options: ["Retracted entirely", "Narrowed/scoped", "Caveated", "Not sure — discuss"]
+    validations: { required: true }
