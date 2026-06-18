@@ -51,3 +51,24 @@ genuinely-new move is **B5**: feed the FAIL verdict (and the failing-test output
 fixer for a second attempt, and measure whether the outcome signal *improves* the next round —
 the actual self-recursion, grounded in reality rather than self-agreement. That is the first time
 in this project the recursion can be tested without circularity.
+
+---
+
+## B5 (first cut) — does feeding the real failure back improve the retry? — INCONCLUSIVE / underpowered
+
+The recursion test, now possible without circularity. Design: for each FAILED task, attempt #2 in
+two arms — **feedback** (given the failing-test symptom: name + error line, NOT the test source) vs
+**control** (fresh resample, bug description only). Recursion works iff feedback beats control.
+
+**Result so far — no evidence feedback helps:**
+- `bc41390` (clean datapoint): **feedback = FAIL, control = FAIL** (both 1-failed, identical to
+  attempt #1). Even with a pointed hint ("the comparator hardcodes the base Version type"), sonnet's
+  retry kept editing the wrong line. Feedback did not rescue it (n=1).
+- `d8813b6` (hard 64-line bug): runs were unstable/contaminated across interrupted attempts; no
+  clean verdict. The fixer fails this task regardless.
+
+**Honest status:** the closed loop (real fail → feedback → retry → real grade) is **built and runs**
+— that mechanism is the milestone. But this cut is **far too small to conclude anything** (1 clean
+task, 1 sample/arm) and what little there is shows **feedback NOT beating control**. A real B5 needs:
+many tasks, several samples/arm, robust (non-bash) worktree orchestration, and feedback that stays
+held-out. Not claimed as a recursion result — claimed as "the apparatus exists; first cut null."
