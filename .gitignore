@@ -14,3 +14,8 @@ __pycache__/
 
 # exp8 per-fix transient outputs (results.jsonl is the durable record)
 experiments/exp8-selfreview/out/
+
+# exp9 real-repo harness: heavy/transient (re-created by cloning semver + venv)
+experiments/exp9-realrepo/semver-src/
+experiments/exp9-realrepo/.venv/
+experiments/exp9-realrepo/task_*/

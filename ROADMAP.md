@@ -139,3 +139,17 @@ self-approve correctly. The one apparent wrong fix was a bug in MY oracle (deman
 float reality is 2.67) — caught in analysis, the 5th self-authored-oracle error this session. Exp2's
 gap stays open; manufacturing plausible-but-wrong fixes is itself hard (which partly explains Exp2's
 null). Real test needs real-code bugs or an external outcome signal, not toy functions.
+
+## Exp9 — real-repo outcome harness (THE ESCAPE) ✓
+
+`experiments/exp9-realrepo/`: the first non-circular result. SWE-bench-lite on real `python-semver`
+bugfix commits — fixer fixes from a description in an isolated worktree; graded by semver's OWN
+held-out regression test + full 333-suite (fixer never sees the test; reward-hack guards: auto-fail
+on any test-file edit, must pass full suite). **1/3 real bugs fixed** (4b03f86 PASS; bc41390 +
+d8813b6 FAIL). The verdict is reality's, not a self-authored oracle — the wall is escaped, and the
+number cannot be demoted by a control because it IS the control.
+
+**B5 is now testable without circularity (the real next move):** feed the FAIL verdict + failing-test
+output back to the fixer for attempt #2, and measure whether the outcome signal improves the retry.
+That is the actual self-recursion, grounded in reality. Difficulty for any ranking layer must fall
+out of measured outcomes, not author choice (else the Exp4 confound returns).
