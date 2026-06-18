@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>recursive-loop-research — an honest study of self-improving agent loops</title>
+<meta name="description" content="Can an agent learn a maintainer's judgment? A bounded self-improving agent-loop suite plus the experiments that test it — where credibility comes from disclosed limits and visible retractions, not hype." />
+<meta property="og:title" content="recursive-loop-research" />
+<meta property="og:description" content="An honest study of recursive self-improvement loops. Five clean-looking results retracted on record. One genuine escape from the circularity wall." />
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: { extend: {
+    fontFamily: { display: ['"Space Grotesk"','system-ui','sans-serif'], body: ['"Plus Jakarta Sans"','system-ui','sans-serif'] },
+    colors: { ink:'#050505', mist:'rgba(255,255,255,0.66)' },
+    transitionTimingFunction: { spring:'cubic-bezier(0.32,0.72,0,1)' },
+  }}
+}
+</script>
+<style>
+  html{scroll-behavior:smooth} body{background:#050505;font-family:"Plus Jakarta Sans",sans-serif}
+  h1,h2,h3,.font-display{font-family:"Space Grotesk",sans-serif}
+  .orb{position:fixed;border-radius:9999px;filter:blur(120px);opacity:.42;pointer-events:none;z-index:0;will-change:transform}
+  .grain{position:fixed;inset:0;z-index:50;pointer-events:none;opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .reveal{opacity:0;transform:translateY(2.5rem);filter:blur(8px);transition:opacity .9s cubic-bezier(0.32,0.72,0,1),transform .9s cubic-bezier(0.32,0.72,0,1),filter .9s cubic-bezier(0.32,0.72,0,1)}
+  .reveal.in{opacity:1;transform:none;filter:blur(0)}
+  .hair{box-shadow:inset 0 1px 1px rgba(255,255,255,.08)}
+</style>
+</head>
+<body class="text-white/90 antialiased overflow-x-hidden selection:bg-emerald-300/30">
+
+<div class="grain"></div>
+<div class="orb" style="width:46rem;height:46rem;background:#10b981;top:-14rem;left:-10rem"></div>
+<div class="orb" style="width:40rem;height:40rem;background:#7c3aed;top:34rem;right:-14rem"></div>
+<div class="orb" style="width:34rem;height:34rem;background:#0ea5e9;bottom:-12rem;left:30%"></div>
+
+<!-- Fluid glass island nav -->
+<nav class="fixed top-0 inset-x-0 z-40 flex justify-center">
+  <div class="mt-6 mx-4 w-max max-w-[94vw] rounded-full border border-white/10 bg-white/5 backdrop-blur-2xl hair px-2 py-2 flex items-center gap-1">
+    <span class="px-4 py-1.5 text-sm font-display font-600 tracking-tight">recursive-loop-research</span>
+    <a href="#experiments" class="hidden sm:block px-3 py-1.5 text-sm text-mist hover:text-white transition-colors duration-500">Experiments</a>
+    <a href="#honest" class="hidden sm:block px-3 py-1.5 text-sm text-mist hover:text-white transition-colors duration-500">Honesty</a>
+    <a href="https://github.com/Tradelord223/recursive-loop-research" class="group ml-1 inline-flex items-center gap-2 rounded-full bg-white text-ink pl-4 pr-1.5 py-1.5 text-sm font-600 transition-all duration-700 ease-spring active:scale-[0.98]">
+      GitHub
+      <span class="grid place-items-center w-7 h-7 rounded-full bg-black/10 transition-transform duration-700 ease-spring group-hover:translate-x-0.5 group-hover:-translate-y-px group-hover:scale-105">↗</span>
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="relative z-10 min-h-[100dvh] flex flex-col justify-center max-w-6xl mx-auto px-6 sm:px-10 pt-40 pb-24">
+  <span class="reveal w-max rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] uppercase tracking-[0.24em] text-mist">Recursive self-improvement · studied honestly</span>
+  <h1 class="reveal mt-8 font-display font-700 leading-[0.95] tracking-tight text-[clamp(2.6rem,7vw,5.6rem)]">
+    Can an agent learn<br><span class="bg-gradient-to-r from-emerald-300 via-white to-violet-300 bg-clip-text text-transparent">a maintainer's judgment?</span>
+  </h1>
+  <p class="reveal mt-8 max-w-2xl text-lg sm:text-xl text-mist leading-relaxed">
+    A bounded, self-improving agent-loop suite — <em class="text-white/90 not-italic">plus the experiments that test what it actually does.</em>
+    Here, credibility comes from disclosed limits and visible retractions, not hype.
+  </p>
+  <div class="reveal mt-10 flex flex-wrap items-center gap-3">
+    <a href="#experiments" class="group inline-flex items-center gap-2 rounded-full bg-white text-ink pl-6 pr-1.5 py-3 font-600 transition-all duration-700 ease-spring active:scale-[0.98]">
+      See the experiments
+      <span class="grid place-items-center w-8 h-8 rounded-full bg-black/10 transition-transform duration-700 ease-spring group-hover:translate-x-1 group-hover:-translate-y-px group-hover:scale-105">↓</span>
+    </a>
+    <a href="https://github.com/Tradelord223/recursive-loop-research/blob/main/research/CLAIMS_NOT_ESTABLISHED.md" class="rounded-full border border-white/12 bg-white/5 px-6 py-3 font-500 text-mist hover:text-white hover:bg-white/8 transition-all duration-700 ease-spring">What this does NOT establish →</a>
+  </div>
+  <div class="reveal mt-16 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-3xl">
+    <div class="rounded-2xl border border-white/10 bg-white/5 hair p-5"><div class="font-display text-3xl font-700">9</div><div class="text-xs text-mist mt-1">experiments</div></div>
+    <div class="rounded-2xl border border-white/10 bg-white/5 hair p-5"><div class="font-display text-3xl font-700">5</div><div class="text-xs text-mist mt-1">retractions on record</div></div>
+    <div class="rounded-2xl border border-white/10 bg-white/5 hair p-5"><div class="font-display text-3xl font-700">1</div><div class="text-xs text-mist mt-1">escape from the wall</div></div>
+    <div class="rounded-2xl border border-white/10 bg-white/5 hair p-5"><div class="font-display text-3xl font-700">0</div><div class="text-xs text-mist mt-1">fabricated metrics</div></div>
+  </div>
+</header>
+
+<!-- THE WALL / THE ESCAPE -->
+<section class="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 py-24">
+  <div class="grid md:grid-cols-12 gap-5">
+    <div class="reveal md:col-span-7 rounded-[2rem] border border-white/10 bg-white/[0.04] p-1.5">
+      <div class="rounded-[calc(2rem-0.375rem)] bg-white/[0.03] hair p-8 sm:p-10 h-full">
+        <span class="text-[10px] uppercase tracking-[0.24em] text-rose-300/80">The wall</span>
+        <h2 class="mt-4 font-display text-3xl sm:text-4xl font-600 leading-tight">Every oracle you author is circular.</h2>
+        <p class="mt-5 text-mist leading-relaxed">Score an agent's judgment against a rubric it follows, and you measure the model agreeing with itself. Across this project, two clean ρ≈1.0 results were <span class="text-white/90">retracted</span> for exactly this; same-model "blind consensus" turned out to be a persona artifact; a self-review study hit a robust floor. The recurring lesson: <span class="text-white/90">a self-authored value signal proves nothing.</span></p>
+      </div>
+    </div>
+    <div class="reveal md:col-span-5 rounded-[2rem] border border-emerald-300/20 bg-emerald-300/[0.06] p-1.5">
+      <div class="rounded-[calc(2rem-0.375rem)] bg-emerald-300/[0.04] hair p-8 sm:p-10 h-full">
+        <span class="text-[10px] uppercase tracking-[0.24em] text-emerald-300/90">The escape · Exp9</span>
+        <h2 class="mt-4 font-display text-3xl sm:text-4xl font-600 leading-tight">A reward you can't fake.</h2>
+        <p class="mt-5 text-mist leading-relaxed">Fix a real bug in a real library; let its <span class="text-white/90">own pre-existing test suite</span> be the judge. Held-out grading, reward-hack guards, worktree isolation. <span class="text-white/90">1 / 3 real bugs fixed.</span> The verdict is reality's, not mine — it cannot be demoted by a control, because it <em class="not-italic text-white/90">is</em> the control.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIMENTS BENTO -->
+<section id="experiments" class="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 py-24">
+  <span class="reveal block w-max rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] uppercase tracking-[0.24em] text-mist">The arc · Exp1 → Exp9</span>
+  <h2 class="reveal mt-6 font-display text-4xl sm:text-5xl font-700 tracking-tight">Nine experiments. Verdicts, not vibes.</h2>
+  <p class="reveal mt-4 max-w-2xl text-mist">Each result is reported straight — including the ones a control demoted. The retractions are the point.</p>
+  <div class="mt-12 grid grid-cols-1 md:grid-cols-12 gap-4">
+    <!-- helper cards -->
+    <div class="reveal md:col-span-5 rounded-[2rem] border border-white/10 bg-white/[0.04] p-1.5">
+      <div class="rounded-[calc(2rem-0.375rem)] bg-white/[0.03] hair p-7 h-full">
+        <div class="flex items-center justify-between"><span class="font-display text-sm text-mist">Exp 3</span><span class="rounded-full bg-emerald-300/15 text-emerald-200 text-[11px] px-2.5 py-1">✓ holds</span></div>
+        <h3 class="mt-3 font-display text-xl font-600">Pairwise &gt; absolute scoring</h3>
+        <p class="mt-2 text-sm text-mist leading-relaxed">Relative judgment is far lower-noise; the item that coin-flipped under absolute scoring ranked stably under pairwise. Stabilizes ordering — not the cut line.</p>
+      </div>
+    </div>
+    <div class="reveal md:col-span-7 rounded-[2rem] border border-white/10 bg-white/[0.04] p-1.5">
+      <div class="rounded-[calc(2rem-0.375rem)] bg-white/[0.03] hair p-7 h-full">
+        <div class="flex items-center justify-between"><span class="font-display text-sm text-mist">Exp 1 · 2</span><span class="rounded-full bg-amber-300/15 text-amber-200 text-[11px] px-2.5 py-1">⚠ scoped · null</span></div>
+        <h3 class="mt-3 font-display text-xl font-600">The rubric gate &amp; self-review collusion</h3>
+        <p class="mt-2 text-sm text-mist leading-relaxed">The <code class="text-white/80">Total≥28</code> cutoff is unsubstantiated; alignment carries the gate, and it's a coin-flip at the boundary (2 retractions, disclosed after blinded re-runs). Same-context self-review showed no collusion on blatant hacks — a null, reported as a floor effect.</p>
+      </div>
+    </div>
+    <div class="reveal md:col-span-4 rounded-[2rem] border border-white/10 bg-white/[0.04] p-1.5">
+      <div class="rounded-[calc(2rem-0.375rem)] bg-white/[0.03] hair p-7 h-full">
+        <div class="flex items-center justify-between"><span class="font-display text-sm text-mist">Exp 4 · 5</span><span class="rounded-full bg-rose-300/15 text-rose-200 text-[11px] px-2.5 py-1">✗ retracted</span></div>
+        <h3 class="mt-3 font-display text-xl font-600">ρ=0.986 / ρ=1.0</h3>
+        <p class="mt-2 text-sm text-mist leading-relaxed">Both near-perfect correlations — both retracted. The oracle was my own test-allocation, and value was <em class="not-italic text-white/80">defined</em> as the thing being measured. Circular.</p>
+      </div>
+    </div>
+    <div class="reveal md:col-span-4 rounded-[2rem] border border-white/10 bg-white/[0.04] p-1.5">
+      <div class="rounded-[calc(2rem-0.375rem)] bg-white/[0.03] hair p-7 h-full">
+        <div class="flex items-center justify-between"><span class="font-display text-sm text-mist">Exp 6 · 7</span><span class="rounded-full bg-rose-300/15 text-rose-200 text-[11px] px-2.5 py-1">✗ demoted</span></div>
+        <h3 class="mt-3 font-display text-xl font-600">"Blind consensus" &amp; diversity</h3>
+        <p class="mt-2 text-sm text-mist leading-relaxed">A 6/6 unanimous-wrong committee looked damning — until a 6×opus control showed the unanimity was a persona/sampling artifact. The "diversity fixes it" follow-up collapsed too.</p>
+      </div>
+    </div>
+    <div class="reveal md:col-span-4 rounded-[2rem] border border-white/10 bg-white/[0.04] p-1.5">
+      <div class="rounded-[calc(2rem-0.375rem)] bg-white/[0.03] hair p-7 h-full">
+        <div class="flex items-center justify-between"><span class="font-display text-sm text-mist">Exp 8</span><span class="rounded-full bg-amber-300/15 text-amber-200 text-[11px] px-2.5 py-1">⭕ robust floor</span></div>
+        <h3 class="mt-3 font-display text-xl font-600">Rubber-stamping own fixes?</h3>
+        <p class="mt-2 text-sm text-mist leading-relaxed">0 genuine wrong fixes in 54 — untestable. The one apparent exception was a bug in <em class="not-italic text-white/80">my own oracle</em>, caught in analysis. The 5th self-authored-oracle error of the session.</p>
+      </div>
+    </div>
+    <div class="reveal md:col-span-12 rounded-[2rem] border border-emerald-300/20 bg-emerald-300/[0.05] p-1.5">
+      <div class="rounded-[calc(2rem-0.375rem)] bg-emerald-300/[0.03] hair p-8 sm:p-10 h-full grid md:grid-cols-12 gap-6 items-center">
+        <div class="md:col-span-8">
+          <div class="flex items-center gap-3"><span class="font-display text-sm text-emerald-200/80">Exp 9</span><span class="rounded-full bg-emerald-300/15 text-emerald-200 text-[11px] px-2.5 py-1">✓ the escape</span></div>
+          <h3 class="mt-3 font-display text-2xl sm:text-3xl font-600">Real-repo outcome harness — the first non-circular result</h3>
+          <p class="mt-3 text-mist leading-relaxed max-w-2xl">SWE-bench-lite on real <code class="text-white/80">python-semver</code> bugfix commits. The fixer never sees the grading test (held out, defeats the hardcode hack); a reward-hack guard <span class="text-white/90">fired on a live attempt</span> when a fixer tried to edit a test. The library's own 333 tests are the judge.</p>
+        </div>
+        <div class="md:col-span-4 rounded-[1.4rem] border border-white/10 bg-white/[0.04] hair p-6 text-center">
+          <div class="font-display text-5xl font-700 text-emerald-200">1/3</div>
+          <div class="text-sm text-mist mt-2">real bugs fixed</div>
+          <div class="text-xs text-mist mt-3 leading-relaxed">incl. a plausible fix that semver's own test rejected</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HONESTY -->
+<section id="honest" class="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 py-24">
+  <div class="reveal rounded-[2rem] border border-white/10 bg-white/[0.04] p-1.5">
+    <div class="rounded-[calc(2rem-0.375rem)] bg-gradient-to-b from-white/[0.05] to-transparent hair p-8 sm:p-14">
+      <span class="text-[10px] uppercase tracking-[0.24em] text-mist">The methodology is the contribution</span>
+      <h2 class="mt-5 font-display text-3xl sm:text-5xl font-700 leading-tight max-w-3xl">Controls demoted five clean-looking results. That discipline is the deliverable.</h2>
+      <div class="mt-10 grid sm:grid-cols-3 gap-5">
+        <div class="rounded-2xl border border-white/10 bg-white/[0.03] hair p-6"><div class="font-display font-600">Blinded &amp; counterbalanced</div><p class="mt-2 text-sm text-mist">Demand characteristics caught and corrected; stimuli re-run blinded.</p></div>
+        <div class="rounded-2xl border border-white/10 bg-white/[0.03] hair p-6"><div class="font-display font-600">Controls before claims</div><p class="mt-2 text-sm text-mist">A 6×opus baseline collapsed a tempting consensus story. Every result earns a control.</p></div>
+        <div class="rounded-2xl border border-white/10 bg-white/[0.03] hair p-6"><div class="font-display font-600">Retractions kept visible</div><p class="mt-2 text-sm text-mist">A demoted result is a deliverable, not an embarrassment — left on the page with its mechanism.</p></div>
+      </div>
+      <p class="mt-10 max-w-3xl text-mist leading-relaxed">The headline question — <span class="text-white/90">can an agent learn a maintainer's judgment?</span> — is <span class="text-white/90">not answered yet, by construction.</span> It needs real human decisions and cannot be self-generated without becoming circular. That honesty is the front door.</p>
+    </div>
+  </div>
+  <div class="reveal mt-10 flex flex-wrap gap-3">
+    <a href="https://github.com/Tradelord223/recursive-loop-research/blob/main/research/PAPER.md" class="group inline-flex items-center gap-2 rounded-full bg-white text-ink pl-6 pr-1.5 py-3 font-600 transition-all duration-700 ease-spring active:scale-[0.98]">Read the paper <span class="grid place-items-center w-8 h-8 rounded-full bg-black/10 transition-transform duration-700 ease-spring group-hover:translate-x-1 group-hover:-translate-y-px">↗</span></a>
+    <a href="https://github.com/Tradelord223/recursive-loop-research/blob/main/REPRODUCE.md" class="rounded-full border border-white/12 bg-white/5 px-6 py-3 font-500 text-mist hover:text-white hover:bg-white/8 transition-all duration-700 ease-spring">Reproduce it</a>
+    <a href="https://github.com/Tradelord223/recursive-loop-research/blob/main/research/CLAIMS_NOT_ESTABLISHED.md" class="rounded-full border border-white/12 bg-white/5 px-6 py-3 font-500 text-mist hover:text-white hover:bg-white/8 transition-all duration-700 ease-spring">What it does NOT establish</a>
+  </div>
+</section>
+
+<footer class="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 py-16 border-t border-white/10 mt-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-sm text-mist">
+  <div>MIT licensed · stdlib-only Python · built with <a class="text-white/80 hover:text-white" href="https://claude.com/claude-code">Claude Code</a></div>
+  <div class="flex gap-5">
+    <a class="hover:text-white transition-colors duration-500" href="https://github.com/Tradelord223/recursive-loop-research">Repository ↗</a>
+  </div>
+</footer>
+
+<script>
+  // staggered scroll reveals — IntersectionObserver, transform/opacity only
+  const els=[...document.querySelectorAll('.reveal')];
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach((e,i)=>{ if(e.isIntersecting){ const el=e.target; setTimeout(()=>el.classList.add('in'), (el.dataset.d||0)*1); io.unobserve(el);} });
+  },{threshold:.12, rootMargin:'0px 0px -8% 0px'});
+  els.forEach((el,i)=>{ el.dataset.d = (i%5)*70; io.observe(el); });
+  // gentle parallax on orbs (transform only, rAF-throttled)
+  let ticking=false;
+  addEventListener('scroll',()=>{ if(!ticking){requestAnimationFrame(()=>{ const y=scrollY; document.querySelectorAll('.orb').forEach((o,i)=>{o.style.transform=`translateY(${y*(0.04+i*0.02)}px)`;}); ticking=false;}); ticking=true;} },{passive:true});
+</script>
+</body>
+</html>
