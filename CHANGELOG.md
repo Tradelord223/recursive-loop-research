@@ -19,8 +19,14 @@ B3 reference gate · B4 router (prototyped) · **B9 real-repo escape ✓** · B5
   collapsed under a 6×opus baseline (the unanimity was a persona/sampling artifact).
 - **Exp8 — robust floor.** Self-review on subtly-wrong fixes: 0 genuine wrong fixes in 54;
   the lone apparent exception was a bug in my own oracle, caught in analysis (5th such error).
-- **B5 (recursion) — first cut null; at-scale run in progress.** Feedback-vs-control retry; no
-  feedback benefit yet (underpowered). Robust orchestrator built.
+- **B5 (recursion) — at-scale run COMPLETE: no feedback benefit (honest null).** Feedback-vs-control
+  retry on real semver tasks (robust Python orchestrator). attempt#1 fixed **2/4** tasks first try;
+  on the 2 failures, retry with the real failure fed back scored **0/6**, plain-resample control
+  **1/6** — feedback did NOT beat control (control edged it). Underpowered (2 tasks × 6 samples,
+  one feedback sample a patch-apply error), but the direction is clear: **outcome-feedback did not
+  improve the retry here.** The actual self-recursion remains undemonstrated; a powered test needs
+  many more tasks across libraries (`mine_tasks.py` ready). Fix-capability (Exp9) stands; recursion
+  does not — logged straight.
 - **Literature scan** — disagreement-gating is prior art (QBC 1992 → ReDAct/Oversight 2026); not
   claimed novel.
 - **Shipped:** public GitHub repo + green CI, issue templates, skills bumped to v3.1.0/2.1.0/2.1.0,

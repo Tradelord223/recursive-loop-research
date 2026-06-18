@@ -74,3 +74,24 @@ But the result is **0/4 with feedback not beating control** on n=2 tasks × 1 sa
 small to conclude, and what little there is shows **no recursion benefit**. A real B5 needs many
 tasks, several samples/arm, robust (non-bash) orchestration, and held-out feedback. Claimed as
 "the apparatus exists + the guard works; first cut shows no feedback benefit" — NOT a recursion win.
+
+---
+
+## B5 AT SCALE (complete) — recursion test, robust orchestrator — NO feedback benefit
+
+Re-ran B5 with a robust Python orchestrator (`b5_scale.py`: unique temp worktrees, held-out
+grading, reward-hack guard, real commit-subject descriptions, feedback = failing-test names +
+error type only). 4 validated semver tasks; the model's OWN attempt-#1 failures form the retry
+set (difficulty falls out of outcomes, not selection).
+
+**Result:**
+- attempt #1: **2/4** fixed first try (4b03f86, f8a182f PASS; d8813b6, bc41390 FAIL).
+- retry on the 2 failures, K=3 samples/arm: **FEEDBACK 0/6 pass · CONTROL 1/6 pass.**
+- **Recursion signal: none** — feedback ≤ control (control actually edged it). One feedback sample
+  was an APPLYFAIL (patch didn't apply cleanly).
+
+**Honest conclusion:** at this scale, feeding the real failure back did **not** improve the retry;
+plain resampling did at least as well. Underpowered (2 failed tasks × 6 samples) — it cannot
+detect a small effect, but there is no large one. The closed loop and reward-hack guard work
+(Exp9); the *recursion benefit* is **not demonstrated**. A powered test needs many more tasks
+across libraries — the apparatus (`mine_tasks.py`, `b5_scale.py`) is built and ready.
