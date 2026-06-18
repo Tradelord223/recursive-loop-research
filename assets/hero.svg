@@ -1,0 +1,50 @@
+<svg width="1280" height="420" viewBox="0 0 1280 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="recursive-loop-research — an honest study of self-improving agent loops">
+  <defs>
+    <radialGradient id="oEm" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#10b981" stop-opacity="0.55"/><stop offset="100%" stop-color="#10b981" stop-opacity="0"/></radialGradient>
+    <radialGradient id="oVi" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#7c3aed" stop-opacity="0.5"/><stop offset="100%" stop-color="#7c3aed" stop-opacity="0"/></radialGradient>
+    <radialGradient id="oSk" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.45"/><stop offset="100%" stop-color="#0ea5e9" stop-opacity="0"/></radialGradient>
+    <linearGradient id="title" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#a7f3d0"/><stop offset="55%" stop-color="#ffffff"/><stop offset="100%" stop-color="#ddd6fe"/></linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#34d399"/><stop offset="100%" stop-color="#a78bfa"/></linearGradient>
+    <filter id="blur" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="55"/></filter>
+    <clipPath id="round"><rect x="2" y="2" width="1276" height="416" rx="28"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#round)">
+    <rect x="0" y="0" width="1280" height="420" fill="#050505"/>
+    <circle cx="180" cy="90" r="200" fill="url(#oEm)" filter="url(#blur)"/>
+    <circle cx="1120" cy="360" r="220" fill="url(#oVi)" filter="url(#blur)"/>
+    <circle cx="760" cy="120" r="170" fill="url(#oSk)" filter="url(#blur)"/>
+
+    <!-- recursive-loop emblem: two arrowed arcs forming a circle -->
+    <g transform="translate(150,210)" fill="none" stroke="url(#ring)" stroke-width="9" stroke-linecap="round">
+      <path d="M -64 -8 A 72 72 0 1 1 -38 56"/>
+      <path d="M 64 8 A 72 72 0 1 1 38 -56"/>
+      <path d="M -38 56 l -22 -6 l 12 22 z" fill="url(#ring)" stroke="none"/>
+      <path d="M 38 -56 l 22 6 l -12 -22 z" fill="url(#ring)" stroke="none"/>
+      <circle cx="0" cy="0" r="6" fill="#ffffff"/>
+    </g>
+
+    <!-- wordmark + tagline (system font for reliable GitHub render) -->
+    <text x="280" y="180" font-family="'Helvetica Neue',Arial,sans-serif" font-size="62" font-weight="700" fill="url(#title)" letter-spacing="-1.5">recursive-loop-research</text>
+    <text x="282" y="226" font-family="'Helvetica Neue',Arial,sans-serif" font-size="25" font-weight="400" fill="#ffffff" opacity="0.62">Can an agent learn a maintainer's judgment? — studied honestly.</text>
+
+    <!-- stat pills -->
+    <g font-family="'Helvetica Neue',Arial,sans-serif" font-size="16" font-weight="600">
+      <g transform="translate(282,272)">
+        <rect x="0" y="0" width="180" height="40" rx="20" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.12"/>
+        <text x="22" y="26" fill="#a7f3d0">9</text><text x="44" y="26" fill="#ffffff" opacity="0.7">experiments</text>
+      </g>
+      <g transform="translate(478,272)">
+        <rect x="0" y="0" width="232" height="40" rx="20" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.12"/>
+        <text x="22" y="26" fill="#fda4af">5</text><text x="44" y="26" fill="#ffffff" opacity="0.7">retractions on record</text>
+      </g>
+      <g transform="translate(726,272)">
+        <rect x="0" y="0" width="252" height="40" rx="20" fill="#10b981" fill-opacity="0.12" stroke="#34d399" stroke-opacity="0.4"/>
+        <text x="22" y="26" fill="#6ee7b7">1</text><text x="44" y="26" fill="#ffffff" opacity="0.85">escape from the wall</text>
+      </g>
+    </g>
+
+    <text x="282" y="352" font-family="'Helvetica Neue',Arial,sans-serif" font-size="15" fill="#ffffff" opacity="0.4">credibility from disclosed limits and visible retractions, not hype · MIT · stdlib-only</text>
+    <rect x="2" y="2" width="1276" height="416" rx="28" fill="none" stroke="#ffffff" stroke-opacity="0.1"/>
+  </g>
+</svg>
