@@ -1,45 +1,114 @@
-# Recursive Loop System — research, experiments & improvements
+<div align="center">
 
-Self-directed work on your `claude-recursive-loop-system.zip`. Your originals were not
-touched; everything here is new and reviewable.
+# 🔁 recursive-loop-research
 
-## Start here
-- **`EXPERIMENTS_REPORT.md`** — two backed experiments with raw data, run with blinded
-  controls. Headline findings:
-  - **Exp1 (rubric):** the `Total≥28` cutoff is unsubstantiated; `Alignment≥8` carries the
-    gate, and it's a coin-flip in the A≈7–8 band (a borderline item split 2-of-6). The same
-    item reverses verdict when its description is reworded — a self-gaming vector since the
-    discovery loop writes *and* scores opportunities. Includes a disclosed methodology error
-    (leading stimuli) and two retractions after blinded re-runs.
-  - **Exp2 (self-review collusion):** NULL — same-context review did *not* rubber-stamp
-    blatant bad proposals. Reported as a manipulation+floor failure, not as evidence.
-- **`improved-suite/IMPROVEMENTS.md`** — concrete, leverage-ordered fixes. Headline: the
-  suite isn't executable and the README's "one command → self-sustaining loop forever" is
-  false; the loop must live outside the model.
-- **`improved-suite/loop_driver.sh`** — a real bounded external driver (`claude -p`,
-  cost/iteration caps, context bridge, separate reviewer) that replaces the no-op Python
-  stub. Syntax-checked, and its cost-cap JSON contract (`total_cost_usd`) verified against a
-  live `claude -p --output-format json` run.
+### Can an agent learn a maintainer's judgment? — an *honest* study of recursive self‑improvement loops.
 
-## Layout
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Python 3.14](https://img.shields.io/badge/python-3.14-blue.svg?logo=python&logoColor=white)](ENVIRONMENT.md)
+[![Dependencies: stdlib only](https://img.shields.io/badge/dependencies-stdlib%20only-brightgreen.svg)](requirements.txt)
+[![CI](https://github.com/Tradelord223/recursive-loop-research/actions/workflows/ci.yml/badge.svg)](.github/workflows/ci.yml)
+[![Findings: 4 retractions on record](https://img.shields.io/badge/findings-4%20retractions%20on%20record-orange.svg)](research/CLAIMS_NOT_ESTABLISHED.md)
+[![Built with Claude Code](https://img.shields.io/badge/built%20with-Claude%20Code-8A2BE2.svg)](https://claude.com/claude-code)
+
+*A bounded, self‑improving agent‑loop suite **plus** the experiments that test what it actually does — where credibility comes from disclosed limits and visible retractions, not hype.*
+
+</div>
+
+---
+
+## Why this exists
+
+Most "recursive self‑improvement" demos are impressive right up until you check them. This project does the checking. It is two things at once:
+
+1. **A usable, bounded autonomous‑loop skill suite** for Claude Code (the loop lives *outside* the model — a real driver, hard caps, separate‑context review, additive‑only auto‑apply).
+2. **A research log** that stress‑tests the suite's own claims and **keeps every overclaim it had to retract visible on the page.**
+
+> The headline result the title asks about — *can an agent learn a maintainer's judgment* — is **not in yet, by construction.** It needs real human decisions and cannot be self‑generated without becoming circular (we prove this four times below). That honesty is the point.
+
+---
+
+## TL;DR — what's proven, what's open
+
+| # | Experiment | Verdict |
+|---|------------|---------|
+| **3** | Pairwise vs absolute opportunity scoring | ✅ **Holds** — pairwise is far lower‑noise; stabilizes *ordering*, not the cut line. |
+| **1** | Is the scoring rubric's gate real? | ⚠️ `Alignment≥8` carries it; `Total≥28` **unsubstantiated**; coin‑flip at the boundary. *(2 retractions, disclosed.)* |
+| **2** | Does same‑context self‑review collude? | ⭕ **NULL** — no collusion observed on blatant hacks. Reported as a floor effect, not evidence. |
+| **4** | Does judgment predict *realized value*? | ❌ **ρ=0.986 RETRACTED** — oracle was my own test‑allocation (circular). |
+| **5** | Value‑prediction vs a structural oracle + deception | ❌ **ρ=1.0 NARROWED** — proves call‑graph *tracing*, not value judgment (value ≡ reach). |
+| **6 / 7** | Same‑model "blind consensus" + does diversity fix it? | ❌ **DEMOTED by a 6×opus control** — the unanimity was a persona/sampling artifact. |
+
+**The standing contribution is not a positive finding — it's the methodology:** controls keep demoting clean‑looking results, and *every self‑authored oracle rebuilds the circularity*. The one non‑circular escape — the human's **revealed preference** — is instrumented and waiting on data.
+
+📄 Full account: **[research/PAPER.md](research/PAPER.md)** · honest limits: **[research/CLAIMS_NOT_ESTABLISHED.md](research/CLAIMS_NOT_ESTABLISHED.md)** · prior art: **[research/LITERATURE.md](research/LITERATURE.md)**
+
+---
+
+## Quickstart
+
+```bash
+git clone https://github.com/Tradelord223/recursive-loop-research
+cd recursive-loop-research
+
+# everything is stdlib-only Python 3.14 — no install step
+./run_checks.sh                 # CI gate: unit tests + py_compile + driver syntax
+
+# glance at the loop's state
+python3 ultra-suite/orchestration/dashboard.py --project .
+
+# regenerate any experiment's deterministic result (oracles reproduce exactly)
+python3 experiments/exp4-closedloop/oracle.py
 ```
-EXPERIMENTS_REPORT.md
-improved-suite/
-  IMPROVEMENTS.md          # recommendations vs your originals (grounded in evidence/primitives/sources)
-  loop_driver.sh           # the missing real loop  (syntax-checked; needs claude CLI + jq to run)
-experiments/
-  exp1-rubric-consistency/
-    STIMULUS_round{2,3}_blinded.md + raw_round{2,3}_blinded.csv  # PRIMARY (blinded)
-    STIMULUS.md + raw_round1.csv                                  # baseline (header disclosed purpose; not fully blinded)
-    STIMULUS_round{2,3}.md + raw_round{2,3}.csv                   # SUPERSEDED — leading stimuli, retained to quantify the bias
-  exp2-collusion/          # PROPOSALS.md, results.md
+
+Running the **bounded autonomous loop** itself needs the `claude` CLI + `jq`:
+
+```bash
+./ultra-suite/orchestration/loop_driver.sh --project . --max-iters 10 --max-cost 5.00
 ```
 
-## How the verdict changed from my first read
-First read: "rubric thresholds are made-up; self-improvement loops drift; citations may be
-fabricated." After running it: citations are real; I could not reproduce the collusion
-failure; and the rubric is partly defensible but its `Total≥28` cutoff is unsubstantiated
-and it's noisy at the boundary — a conclusion I only reached after catching and correcting
-a leading-stimulus error in my own experiment (two retractions, all disclosed). The durable
-problem is the one orthogonal to all the safety theater — **there is no loop**, just a
-description of one. That's what `loop_driver.sh` fixes.
+See **[REPRODUCE.md](REPRODUCE.md)** to regenerate every experiment, **[ENVIRONMENT.md](ENVIRONMENT.md)** for setup.
+
+---
+
+## What's in here
+
+```
+ultra-suite/                  the installable, bounded loop suite
+  skills/                     recursive-loop-engineer · loop-runner · coding-swe-tuning
+  orchestration/              loop_driver.sh · state_orchestrator.py · action_router.sh
+                              gate.py · dashboard.py   (real drivers — no self-looping fiction)
+  opportunity-scoring-rubric.md   Alignment-gated; Total is a heuristic, not a cutoff
+revealed-preference/          prefs.py — the ONE non-circular signal (learn the human's real calls)
+experiments/                  exp1…exp7 — stimuli, raw rater data, deterministic oracles, results.md
+research/                     PAPER.md · LITERATURE.md · THREAT_MODEL.md · CLAIMS_NOT_ESTABLISHED.md
+EXPERIMENTS_REPORT.md         the backed-experiments report (Exp1–7)
+REPRODUCE.md · CONTRIBUTING.md · ENVIRONMENT.md
+```
+
+---
+
+## The design, in one breath
+
+The loop **lives outside the model** (Claude Code can't re‑prompt itself across context windows). An external driver re‑invokes it; **hard caps** (iterations / cost / completion‑streak) live in the driver, not in model willpower; a **separate‑context reviewer** checks each cycle (reviewer ≠ author); and **auto‑apply is restricted to additive + reversible changes** — anything that deletes a test, weakens a gate, edits a skill, or is irreversible routes to a human. Destructive‑action protection and budget/routing defer to the shipping `safety-guard` and `cost-aware-llm-pipeline` skills rather than being reinvented.
+
+<details>
+<summary><b>The honesty discipline (why the retractions are a feature)</b></summary>
+
+This repo treats a demoted result as a *deliverable*, not an embarrassment. Across the session, four clean‑looking numbers were caught by controls — a blinded re‑run, a circularity check, a 6×opus baseline — and each correction is kept on the page with its mechanism. See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the evidence norms (blinded controls, counterbalanced order, separate authoring from scoring, controls *before* declaring a result) and **[research/THREAT_MODEL.md](research/THREAT_MODEL.md)** for the self‑gaming + runaway‑autonomy vectors and their mitigations.
+
+</details>
+
+---
+
+## Status
+
+Early‑stage research, actively honest. The suite runs and is test‑gated; the experiments reproduce; the central question (learning a maintainer's judgment) awaits real human decisions. Issues and scrutiny welcome — especially attempts to break a claim.
+
+<div align="center">
+
+**[Read the paper →](research/PAPER.md)**  ·  **[What this does NOT establish →](research/CLAIMS_NOT_ESTABLISHED.md)**  ·  **[Reproduce it →](REPRODUCE.md)**
+
+<sub>MIT licensed · stdlib‑only · built with <a href="https://claude.com/claude-code">Claude Code</a></sub>
+
+</div>
