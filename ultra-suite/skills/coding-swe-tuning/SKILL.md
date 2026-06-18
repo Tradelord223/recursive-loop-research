@@ -1,7 +1,7 @@
 ---
 name: coding-swe-tuning
 description: Domain tuning for software-engineering and coding-agent work inside the recursive loop suite. Test-driven self-modification, git worktree isolation, deterministic verification signals (tests/lint/types/build) primary with LLM review secondary, separate-context code review, and a strict additive-and-reversible auto-apply gate. Use with recursive-loop-engineer and loop-runner; pair with safety-guard in full-auto.
-version: 2.0.0
+version: 2.1.0
 tags: [coding, swe, test-driven-development, self-modification, git-worktrees, verification, claude-code]
 ---
 
@@ -57,6 +57,13 @@ The verification loop runs in two layers, in order:
    We keep separation because it is cheap and principled, **not** because it is measured to be
    necessary. Do not claim separation is proven, and do not claim same-context review is
    unsafe. It remains a backstop, never a substitute for the deterministic gate.
+
+   **Never substitute rater consensus for the deterministic gate.** If you use multiple reviewers,
+   their *agreement* is not a correctness certifier — a same-model committee shares blind spots
+   (*correlated blindness*: in Exp6/Exp7 a committee unanimously rated a strictly-broken
+   implementation tied with a perfect one, and a 6×opus control showed the unanimity was an
+   artifact). Tests/build/lint decide; agreement does not. Keep the green deterministic signal as
+   the authority and treat any committee as a backstop only.
 
 ## The Auto-Apply Gate (the spine of this skill)
 

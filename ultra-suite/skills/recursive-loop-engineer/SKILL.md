@@ -1,7 +1,7 @@
 ---
 name: recursive-loop-engineer
 description: Flagship loop-engineering skill. Turns one detailed user prompt into a Master Recursive Architecture Specification for a BOUNDED, self-improving, opportunity-discovering agent system built on three coordinated loops — Primary Execution, Meta-Improvement, and Opportunity Discovery — over persistent file state anchored to an immutable Original Intent. The loop is driven EXTERNALLY (orchestration/loop_driver.sh, /loop, ScheduleWakeup, a cron routine, or hooks), never by a self-prompting model. Maps the loops onto LangChain's 4-layer model, enforces evaluator-optimizer separation, restricts auto-apply to additive+reversible changes, defers opportunity scoring to opportunity-scoring-rubric.md, and delegates execution mechanics to the shipping safety-guard, cost-aware-llm-pipeline, and autonomous-loops skills. For Claude Code / agent teams that want a governed, long-running evolution layer with hard human gates on risk.
-version: 3.0.0
+version: 3.1.0
 tags: [recursive-self-improvement, loop-engineering, bounded-autonomy, opportunity-discovery, evaluator-optimizer, claude-code]
 ---
 
@@ -95,6 +95,16 @@ review.
    `ALIGNMENT_CHECK.md`.
 9. **Test-Driven Self-Modification.** Any code change, fix, or new capability must pass
    tests/verification — run by the separate reviewer step — before it counts as complete.
+10. **Outcome-Validation Over Self-Authored Oracles (anti-circularity).** When the system
+    judges its own work or opportunities, validate that judgment against an UNFAKEABLE OUTCOME
+    (tests, build, CI, a real-world metric) — never against a value oracle the system itself
+    authored, which is circular (this project retracted two clean ρ≈1.0 results for exactly that;
+    see `../../research/CLAIMS_NOT_ESTABLISHED.md`). Auto-deciding via the judgment system IS the
+    point; self-grading is the trap. And if a *separate* study measures whether the agent has
+    learned the **human's** judgment, the agent's own auto-decisions must be logged SEPARATELY
+    from the human's real decisions — relabeling the agent's calls as the human's makes the
+    "learned the maintainer" result circular. The only non-circular external signal is the
+    human's revealed preference (`../../revealed-preference/`) or a real outcome.
 
 ## Input
 

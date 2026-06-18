@@ -1,7 +1,7 @@
 ---
 name: loop-runner
 description: Operator for externally-driven recursive loop systems. Runs the three coordinated loops (Primary Execution, Meta-Improvement, Opportunity Discovery) over persistent file state, anchored to an immutable Original Intent. You are ONE turn inside an external loop — the driver (orchestration/loop_driver.sh, /loop, ScheduleWakeup, a cron routine, or hooks) re-invokes you; you do not self-loop. Handles SHARED_TASK_NOTES.md state sync, loop cadence, separate-context review, EXTERNAL hard caps (iterations, cost, duration, completion streak), human gates, and resumption. Use to coordinate autonomous multi-loop operation in Claude Code.
-version: 2.0.1
+version: 2.1.0
 tags: [loop-execution, agent-coordination, state-management, long-running-agents, claude-code]
 ---
 
@@ -127,6 +127,14 @@ reviewer confirms verification actually passes.
 > collusion observed. Keep separation because it is cheap and principled, **not** because it is
 > proven necessary. Never claim it is.
 
+**Consensus is NOT a correctness signal.** Do not gate on rater *agreement* to certify a change.
+A same-model committee (the cheap, realistic setup) shares blind spots — *correlated blindness* —
+so unanimity can be confidently wrong. In Exp6/Exp7 a committee rated a strictly-broken
+implementation **tied** with a perfect one, and a 6×opus control showed the "blind unanimity" was
+a persona/sampling artifact, not a property to trust. Validate by **deterministic outcome** (the
+reviewer's tests/build), never by how much the raters agree. (Disagreement-gating is established
+prior art; see `../../research/LITERATURE.md`. Don't add a "trust-consensus" auto-apply path.)
+
 ### 5. Enforce human gates
 
 Two distinct gate triggers. Both are mandatory; neither has a confidence bypass.
@@ -141,6 +149,14 @@ is High"* is a **self-granted permission escalation — always HOLD** and route 
 (This inverts the older "high-confidence improvements are auto-applied" rule, which is unsafe
 for any non-additive change.) For blocking destructive actions in full-auto runs, defer to the
 `safety-guard` skill — do not reimplement that protection here.
+
+**Validate auto-applied judgment by OUTCOME, not by self-grading.** When you auto-apply an
+additive change the loop *decided* to make, that decision is legitimate (auto-deciding is the
+point) **only because** it is confirmed by an unfakeable outcome — the reviewer's tests/build/CI
+pass. Never validate a self-made decision against a value oracle the system itself authored: that
+is circular (this project retracted two clean ρ≈1.0 results for exactly that). Keep the agent's
+own decisions in a log SEPARATE from any human revealed-preference signal; relabeling the agent's
+calls as the human's makes a "learned the maintainer's judgment" claim circular.
 
 **(b) Boundary-band gate — opportunities near the scoring edge go to a human.** Score
 opportunities against `opportunity-scoring-rubric.md`, but treat the numbers operationally:
@@ -172,8 +188,11 @@ turns). On any startup or post-pause invocation:
    that phase.
 
 Update `PROGRESS.md` after each major phase (Primary cycle complete, Improvement batch,
-Discovery run) with a concise status line. Do experimental self-modification inside a git
-worktree so an abandoned attempt leaves the main tree clean.
+Discovery run) with a concise status line. For a glanceable read of the durable state at any
+time, run `orchestration/dashboard.py --project <dir>` (stdlib-only, read-only): it tallies
+cycles/cost, pending vs resolved gate items, and agent-vs-human decision counts from the state
+files. Do experimental self-modification inside a git worktree so an abandoned attempt leaves the
+main tree clean.
 
 For the non-driver entry points (scheduled `/loop`/cron Meta-Improvement and Discovery, or a
 custom driver), take a **pre-cycle backup** via `orchestration/state_orchestrator.py
