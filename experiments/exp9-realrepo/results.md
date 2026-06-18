@@ -60,15 +60,17 @@ The recursion test, now possible without circularity. Design: for each FAILED ta
 two arms — **feedback** (given the failing-test symptom: name + error line, NOT the test source) vs
 **control** (fresh resample, bug description only). Recursion works iff feedback beats control.
 
-**Result so far — no evidence feedback helps:**
-- `bc41390` (clean datapoint): **feedback = FAIL, control = FAIL** (both 1-failed, identical to
-  attempt #1). Even with a pointed hint ("the comparator hardcodes the base Version type"), sonnet's
-  retry kept editing the wrong line. Feedback did not rescue it (n=1).
-- `d8813b6` (hard 64-line bug): runs were unstable/contaminated across interrupted attempts; no
-  clean verdict. The fixer fails this task regardless.
+**Result (complete first cut, 2 tasks × 2 arms = 4) — feedback did NOT beat control: 0/4 pass.**
+- `bc41390`: **feedback = FAIL, control = FAIL** (both 1-failed, identical to attempt #1). Even with
+  a pointed hint ("the comparator hardcodes the base Version type"), sonnet's retry kept editing the
+  wrong line. Feedback did not rescue it.
+- `d8813b6` (hard 64-line bug): **feedback = FAIL** (5 failed); **control = AUTO-FAIL** — the
+  control-arm fixer **edited a test file**, and the reward-hack guard caught it. (Bonus validation:
+  the guard fired on a real reward-hack attempt, exactly as designed.)
 
-**Honest status:** the closed loop (real fail → feedback → retry → real grade) is **built and runs**
-— that mechanism is the milestone. But this cut is **far too small to conclude anything** (1 clean
-task, 1 sample/arm) and what little there is shows **feedback NOT beating control**. A real B5 needs:
-many tasks, several samples/arm, robust (non-bash) worktree orchestration, and feedback that stays
-held-out. Not claimed as a recursion result — claimed as "the apparatus exists; first cut null."
+**Honest status:** the closed loop (real fail → feedback → retry → real grade) is **built and runs**,
+and the reward-hack guard demonstrably works on a live attempt — that apparatus is the milestone.
+But the result is **0/4 with feedback not beating control** on n=2 tasks × 1 sample/arm — far too
+small to conclude, and what little there is shows **no recursion benefit**. A real B5 needs many
+tasks, several samples/arm, robust (non-bash) orchestration, and held-out feedback. Claimed as
+"the apparatus exists + the guard works; first cut shows no feedback benefit" — NOT a recursion win.
