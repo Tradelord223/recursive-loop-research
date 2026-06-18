@@ -11,3 +11,6 @@ __pycache__/
 
 # incomplete rater output (junk)
 **/*.pending
+
+# exp8 per-fix transient outputs (results.jsonl is the durable record)
+experiments/exp8-selfreview/out/

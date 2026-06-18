@@ -129,3 +129,13 @@ parks gate proposals (`enqueue`, called from `action_router.sh` escalate + surfa
 (`review --suggest` pre-shows the predictor's guess so corrections become training examples).
 Fail-safe capture to `state/GATE_RESOLVED.jsonl`. Verified end-to-end. The safety gate IS the
 training-data source — so real B5 data accrues simply by running the system safely.
+
+## Exp8 — self-review on subtly-wrong fixes (Exp2's named gap)
+
+`experiments/exp8-selfreview/`: does an agent rubber-stamp its OWN subtly-wrong fix more than an
+independent reviewer? **Untestable — robust floor.** 3 escalating runs (sonnet, haiku, haiku+gotcha
+tasks) yielded **0 genuine wrong fixes in 54**; reason-only models fix toy tasks correctly and
+self-approve correctly. The one apparent wrong fix was a bug in MY oracle (demanded round(2.675,2)=2.68;
+float reality is 2.67) — caught in analysis, the 5th self-authored-oracle error this session. Exp2's
+gap stays open; manufacturing plausible-but-wrong fixes is itself hard (which partly explains Exp2's
+null). Real test needs real-code bugs or an external outcome signal, not toy functions.

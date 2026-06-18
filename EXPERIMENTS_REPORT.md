@@ -168,6 +168,7 @@ four clean-looking results were demoted by a control or a circularity check this
 | **Exp5** (`exp5-deceptive`) | Value-prediction vs an independent structural oracle, with deception | **ρ=1.0 NARROWED.** Proves call-graph tracing + deception-resistance (scary-named dead code → bottom), NOT value judgment — value was *defined* ≡ reach (circular). Unanimity was "the tell." |
 | **Exp6** (`exp6-disjointness`) | Does same-model committee consensus certify correctness? | **DEMOTED.** One committee (cavecrew = opus+persona) went 6/6 unanimous-wrong on a strictly-dominated impl — but a 6×opus control showed clean opus is 3/3 (coin-flip), so the unanimity was a persona/sampling artifact. Existence proof only. |
 | **Exp7** (`exp7-diverse`) | Does tier-diversity break the (claimed) blindness? | **NOT SUPPORTED.** The "diversity fixes it" contrast collapsed under the 6×opus baseline (single-tier already splits as much). 3 retractions logged. |
+| **Exp8** (`exp8-selfreview`) | Does an agent rubber-stamp its own *subtly-wrong* fixes? (Exp2's gap) | **ROBUST FLOOR.** 0 genuine wrong fixes in 54 across 3 escalating runs (sonnet→haiku→gotcha); author-bias untestable. The one apparent exception was my own oracle bug (float test), caught in analysis — the 5th self-authored-oracle error of the session. |
 
 **Prior-art note** (`research/LITERATURE.md`): the disagreement-gate idea is established (QBC 1992 →
 deep ensembles → self-consistency → ReDAct/Oversight 2026); not claimed novel here.
